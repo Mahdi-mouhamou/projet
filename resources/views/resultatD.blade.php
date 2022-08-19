@@ -23,7 +23,8 @@
       padding-top: 12px;
       padding-bottom: 12px;
       text-align: left;
-      background-color: #04AA6D;
+      /* background-color: #04AA6D; */
+      background-color: rgb(255, 106, 52);
       color: white;
     }
     </style>
@@ -36,16 +37,24 @@
 
     </tr>
     <tr>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation 2D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation 3D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation GG</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation potentiel</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Nbr puit Exploration</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Nbr puits Delination</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Realisation GG</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Realisation potentiel</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Nbr puit Exploration</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Nbr puits Delination</td>
     </tr>
     <tr>
-        <td>{{ $realisation2D }}</td>
-        <td>{{ $realisation3D }}</td>
+        <td>{{ $realisation2DA }}</td>
+        <td>{{ $realisation2DT }}</td>
+        <td>{{ $realisation2DRT }}</td>
+        <td>{{ $realisation3DA }}</td>
+        <td>{{ $realisation3DT }}</td>
+        <td>{{ $realisation3DRT }}</td>
         <td>{{ $realisationGg }}</td>
         <td>{{ $realisationPot }}</td>
         <td>{{ $puitE }}</td>
@@ -59,16 +68,24 @@
 
     </tr>
     <tr>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife 2D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife 3D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife GG</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife potentiel</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife puit Exploration</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife puits Delination</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife GG</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife potentiel</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puit Exploration</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puits Delination</td>
     </tr>
     <tr>
-        <td>{{ $effectif2D }}</td>
-        <td>{{ $effectif3D }}</td>
+        <td>{{ $effectif2DA }}</td>
+        <td>{{ $effectif2DT }}</td>
+        <td>{{ $effectif2DRT }}</td>
+        <td>{{ $effectif3DA }}</td>
+        <td>{{ $effectif3DT }}</td>
+        <td>{{ $effectif3DRT }}</td>
         <td>{{ $effectifGg }}</td>
         <td>{{ $effectifpot }}</td>
         <td>{{ $effectifPuitE }}</td>
@@ -82,16 +99,23 @@
 
     </tr>
     <tr>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation 2D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation 3D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation GG</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation potentiel</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Nbr puit Exploration</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Nbr puits Delination</td>
-    </tr>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Realisation GG</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Realisation potentiel</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Nbr puit Exploration</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Nbr puits Delination</td>    </tr>
     <tr>
-        <td>{{ $realisation2D }}</td>
-        <td>{{ $realisation3D }}</td>
+        <td>{{ $realisation2DA }}</td>
+        <td>{{ $realisation2DT }}</td>
+        <td>{{ $realisation2DRT }}</td>
+        <td>{{ $realisation3DA }}</td>
+        <td>{{ $realisation3DT }}</td>
+        <td>{{ $realisation3DRT }}</td>
         <td>{{ $realisationGg }}</td>
         <td>{{ $realisationPot }}</td>
         <td>{{ $puitE }}</td>
@@ -105,16 +129,24 @@
 
     </tr>
     <tr>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife 2D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife 3D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife GG</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife potentiel</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife puit Exploration</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Effictife puits Delination</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife GG</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife potentiel</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puit Exploration</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puits Delination</td>
     </tr>
     <tr>
-        <td>{{ $effectif2D }}</td>
-        <td>{{ $effectif3D }}</td>
+        <td>{{ $effectif2DA }}</td>
+        <td>{{ $effectif2DT }}</td>
+        <td>{{ $effectif2DRT }}</td>
+        <td>{{ $effectif3DA }}</td>
+        <td>{{ $effectif3DT }}</td>
+        <td>{{ $effectif3DRT }}</td>
         <td>{{ $effectifGg }}</td>
         <td>{{ $effectifpot }}</td>
         <td>{{ $effectifPuitE }}</td>
@@ -128,16 +160,24 @@
 
     </tr>
     <tr>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation 2D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation 3D</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation GG</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Realisation potentiel</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Nbr puit Exploration</td>
-        <td style="color: white;background-color:#04AA6D; text-align: center">Nbr puits Delination</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Realisation GG</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Realisation potentiel</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Nbr puit Exploration</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Nbr puits Delination</td>    </tr>
     </tr>
     <tr>
-        <td>{{ $realisation2D }}</td>
-        <td>{{ $realisation3D }}</td>
+        <td>{{ $realisation2DA }}</td>
+        <td>{{ $realisation2DT }}</td>
+        <td>{{ $realisation2DRT }}</td>
+        <td>{{ $realisation3DA }}</td>
+        <td>{{ $realisation3DT }}</td>
+        <td>{{ $realisation3DRT }}</td>
         <td>{{ $realisationGg }}</td>
         <td>{{ $realisationPot }}</td>
         <td>{{ $puitE }}</td>
@@ -146,6 +186,5 @@
 </table>  
 <br><br><br>
 @endif
-
 
 @endsection

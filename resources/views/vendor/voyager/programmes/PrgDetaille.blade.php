@@ -18,7 +18,7 @@
     }
 
     #customers tr:nth-child(even) {
-        background-color: #f2f2f2;
+        background-color: #ffffff;
     }
 
     /* #customers tr:hover {background-color:  #82e8c3;color: white;} */
@@ -27,8 +27,9 @@
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
-        background-color: #04AA6D;
-        color: white;
+        text-align: center;
+        background-color: rgb(255, 106, 52);
+        color:white;
     }
 </style>
 
@@ -42,11 +43,30 @@ $phase = collect(json_decode($json, true));
 // $programme = collect(json_decode($programme, true));
 @endphp
 @section('content')
-<h2 style="color: black;text-align:center;">Objectifs premiere phase</h2><br>
+<h2 style="margin-bottom: 30px;;color: black;text-align:center;font-family:fangsong">Detaille de la @foreach ($programme as $items)  {{ $items->phase }} @endforeach du plan de devlopement @foreach ($perimetre as $items)
+   du perimetre {{ $items->NomPerimetre }} 
+    @endforeach
+</h2><br>
+<table id="customers" style="width:100%">
+    <tr>
+        <th class="text-center" colspan="8">Date prevu de debut et fin </th>
+    </tr>
+    <tr>
+        <th >Date debut</th>
+        <th >Date fin</th>
+    </tr>
+ 
+    <tr>
+          @foreach ($programme as $items)
+            <td>{{ $items->dateD }}</td>
+            <td>{{ $items->dateF }}</td>
+          @endforeach
+    </tr>
+</table>
+<br>
     <table id="customers" style="width:100%">
         <tr>
-           
-            <th class="text-center" colspan="8">Objectifs Sisimique de La premiere Phase </th>
+            <th class="text-center" colspan="8">Realisation Sismique </th>
         </tr>
         <tr>
             <th colspan="2">Aquisition</th>

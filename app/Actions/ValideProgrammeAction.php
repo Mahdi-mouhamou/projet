@@ -37,7 +37,12 @@ class ValideProgrammeAction extends AbstractAction
 
     public function shouldActionDisplayOnDataType()
     {
-        if( Auth::user()->role_id == 6  || Auth::user()->role_id == 1)
+
+        if(Auth::user()->name === "admin")
+        {
+            return $this->dataType->slug == 'programmes';
+        }
+        if(Auth::user()->name === "ASSET")
         {
             return $this->dataType->slug == 'programmes';
         }
@@ -46,11 +51,11 @@ class ValideProgrammeAction extends AbstractAction
 
       public function shouldActionDisplayOnRow($row)
    {
-    if( Auth::user()->role_id == 6)
+    if( Auth::user()->name === "ASSET")
     {
         return $row->valide == 'non';
     }
-    if(Auth::user()->role_id == 1)
+    if(Auth::user()->name === "admin")
     {
         return $row->valide == 'non';
     }

@@ -1,0 +1,43 @@
+
+   ErrorException 
+
+  file_put_contents(C:\laragon\www\Projet\app/Http/Controllers/Route::get('perimetres/valide',[PerimetresController::class,'valide'])-;.php): failed to open stream: No such file or directory
+
+  at C:\laragon\www\Projet\vendor\laravel\framework\src\Illuminate\Filesystem\Filesystem.php:187
+    183▕      * @return int|bool
+    184▕      */
+    185▕     public function put($path, $contents, $lock = false)
+    186▕     {
+  ➜ 187▕         return file_put_contents($path, $contents, $lock ? LOCK_EX : 0);
+    188▕     }
+    189▕ 
+    190▕     /**
+    191▕      * Write the contents of a file, replacing it atomically if it already exists.
+
+  1   C:\laragon\www\Projet\vendor\laravel\framework\src\Illuminate\Filesystem\Filesystem.php:187
+      file_put_contents("C:\laragon\www\Projet\app/Http/Controllers/Route::get('perimetres/valide',[PerimetresController::class,'valide'])-;.php", "<?php
+
+namespace App\Http\Controllers\Route::get('perimetres;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class valide',[PerimetresController::class,'valide'])-; extends Controller
+{
+    //
+}
+")
+
+  2   C:\laragon\www\Projet\vendor\laravel\framework\src\Illuminate\Console\GeneratorCommand.php:164
+      Illuminate\Filesystem\Filesystem::put("C:\laragon\www\Projet\app/Http/Controllers/Route::get('perimetres/valide',[PerimetresController::class,'valide'])-;.php", "<?php
+
+namespace App\Http\Controllers\Route::get('perimetres;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+class valide',[PerimetresController::class,'valide'])-; extends Controller
+{
+    //
+}
+")

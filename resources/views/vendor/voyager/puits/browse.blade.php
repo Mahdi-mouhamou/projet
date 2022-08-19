@@ -1,79 +1,18 @@
 @extends('voyager::master')
 
 @section('page_title', __('voyager::generic.viewing').' '.$dataType->getTranslatedAttribute('display_name_plural'))
-{{-- <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    tr:hover {background-color: coral;}
-    </style> --}}
+
 @section('page_header')
-    <div class="container-fluid">
-        <h3 class="text-center" style="color: black;padding: 25px;">
-            <i class="{{ $dataType->icon }}"></i> {{ $dataType->getTranslatedAttribute('display_name_plural') }}
-        </h3>
-       
-     
-        {{-- @can('add', app($dataType->model_name))
-            <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
-                <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
+<div class="container-fluid">
+    <h1 style="color: black;font-size: 20px" class="page-title">
+        <i class="{{ $dataType->icon }}"></i> {{ $dataType->getTranslatedAttribute('display_name_plural') }}
+    </h1> 
+        @can('add', app($dataType->model_name))
+            <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" style="background-color: rgb(247, 78, 16);" class="btn btn-success btn-add-new">
+                <i class="voyager-plus"></i> <span>Ajouter un nouveau puit</span>
             </a>
-        @endcan --}}
-        {{-- <ul class="nav nav-tabs" style="margin-bottom: 25px;">
-            <li class="active"><a href="#home" data-toggle="tab">Objectif Sismique Phase 1</a></li>
-            <li class="active"><a href="#home" data-toggle="tab">Objectif Sismique Phase 2</a></li>
-            <li class="active"><a href="#home" data-toggle="tab">Objectif Sismique Phase 3</a></li>
-            <li><a href="#profile" data-toggle="tab">Profile</a></li>
-            <li class="active"> @can('add', app($dataType->model_name))
-                <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
-                    <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
-                </a>
-            @endcan</li>
-            
-        </ul>
-        
-        <div id="myTabContent" class="tab-content">
-            <div class="tab-pane fade active in" id="home">
-                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-            </div>
-            <div class="tab-pane fade" id="profile">
-                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-            </div>
-        </div> --}}
+        @endcan
   
-        <ul class="nav nav-pills">
-              <li class="active"> @can('add', app($dataType->model_name))
-                <a href="{{ route('voyager.'.$dataType->slug.'.create') }}">
-                    <i class="voyager-plus"></i> Ajouter nouveau puit</span>
-                </a>
-            @endcan</li>
-            <li><a  target="_blank" href="{{ route('phase1') }}"><i class="voyager-tools">  </i>Objectif puit 1 er phase</a></li>
-            <li><a  target="_blank" href="{{ route('phase2') }}"><i class="voyager-tools">  </i>Objectif puit 2 eme phase</a></li>
-            <li><a  target="_blank" href="{{ route('phase3') }}"><i class="voyager-tools">  </i>Objectif puit 3 eme phase</a></li>
-          
-            {{-- <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                    Dropdown <span class="caret"></span>
-                </a>
-                
-                <ul class="dropdown-menu">
-                    <li><a href="#">Objectif Sismique 1 er phase</a></li>
-                    <li><a href="#">Objectif Sismique 2 eme phase</a></li>
-                    <li><a href="#">Objectif Sismique 3 eme phase</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-                </li> --}}
-        </ul>
-        
         {{-- @can('delete', app($dataType->model_name))
             @include('voyager::partials.bulk-delete')
         @endcan --}}
@@ -148,7 +87,7 @@
                                         @foreach($dataType->browseRows as $row)
                                         <th class="text-center" style="font-size: 11px;">
                                             @if ($isServerSide && in_array($row->field, $sortableColumns))
-                                                <a href="{{ $row->sortByUrl($orderBy, $sortOrder) }}">
+                                                <a style="color: rgb(0, 0, 0);" href="{{ $row->sortByUrl($orderBy, $sortOrder) }}">
                                             @endif
                                             {{ $row->getTranslatedAttribute('display_name') }}
                                             @if ($isServerSide)

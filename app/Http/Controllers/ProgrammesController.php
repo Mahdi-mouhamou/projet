@@ -6,9 +6,15 @@ use Exception;
 use Carbon\Carbon;
 use App\Models\Programme;
 use Illuminate\Http\Request;
+use App\Models\HistoriqueAdd;
+use App\Models\HistoriqueSup;
+use App\Models\HistoriqueEdit;
 use Doctrine\DBAL\Schema\View;
+use App\Events\RealTimeMessage;
 use TCG\Voyager\Facades\Voyager;
+use App\Notifications\InvoicePaid;
 use Illuminate\Support\Facades\DB;
+use App\Models\HistoriqueValidation;
 use Illuminate\Support\Facades\Auth;
 use Database\Seeders\PostsTableSeeder;
 use TCG\Voyager\Events\BreadDataAdded;
@@ -16,6 +22,7 @@ use TCG\Voyager\Events\BreadDataDeleted;
 use TCG\Voyager\Events\BreadDataUpdated;
 use TCG\Voyager\Events\BreadDataRestored;
 use TCG\Voyager\Events\BreadImagesDeleted;
+use App\Notifications\RealTimeNotification;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
@@ -44,6 +51,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
 
         // GET THE DataType based on the slug
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+        // dd($dataType);
 
         // Check permission
         $this->authorize('browse', app($dataType->model_name));
@@ -204,7 +212,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
         //       $db->update(['valideB' => 'oui']);
         //     }
     //   }
-        // dd($db);
+        
       
     
         return Voyager::view($view, compact(
@@ -241,11 +249,16 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
 
     public function show(Request $request, $id)
     {
+        
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
         $isSoftDeleted = false;
+        // event(new RealTimeMessage($dataType));
+        // $dataType->notify(new RealTimeNotification($dataType));
+       
+            // dd($dataType);
 
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
@@ -265,6 +278,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
         } else {
             // If Model doest exist, get data from table name
             $dataTypeContent = DB::table($dataType->name)->where('id', $id)->first();
+            
         }
 
         // Replace relationships' keys for labels and create READ links if a slug is provided.
@@ -290,7 +304,24 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
 
        
 
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable', 'isSoftDeleted'));
+        
+            $programme = DB::table('programmes')
+                ->select('*')
+                ->where('id', '=', $id)
+                ->get();
+
+            $contratID=$programme->pluck('contrat_id');
+
+            $perimetre = DB::table('perimetres')
+            ->select('NomPerimetre')
+            ->where('contrat_id', '=', $contratID)
+            ->get();
+            // dd($perimetre);
+            return view('vendor.voyager.programmes.PrgDetaille', [
+                'programme' => $programme,
+                'perimetre'=>$perimetre
+            ]);
+        
     }
 
     //***************************************
@@ -307,9 +338,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
 
     public function edit(Request $request, $id)
     {
-        $prog = Programme::where('id','=',$id)->first();
-        $prog->Valide = "non";
-        $prog->save();
+        
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -361,55 +390,97 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
     // POST BR(E)AD
     public function update(Request $request, $id)
     {
+       $valide = Programme::where('id','=',$id)->first();
+       $valide->Valide = "non";
+       $valide->save();
+        // dd($request->phase);
+
+        // $prog=DB::table('programmes')
+        // ->select('*')
+        // ->where('contrat_id','=',$request->contrat_id)
+        // ->where('contrat_id','=',$request->phase)
+        // ->count();
+
+        $prog=DB::table('programmes')
+        ->select('*')
+        ->where('contrat_id','=',$request->contrat_id)
+        ->count();
+        // dd($prog);
+        
+        if ($prog<3) {
+
+            
+            $slug = $this->getSlug($request);
+
+            $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+            
+            // Compatibility with Model binding.
+            $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
+            $model = app($dataType->model_name);
+            $query = $model->query();
+            if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope' . ucfirst($dataType->scope))) {
+                $query = $query->{$dataType->scope}();
+            }
+            if ($model && in_array(SoftDeletes::class, class_uses_recursive($model))) {
+                $query = $query->withTrashed();
+            }
+    
+            $data = $query->findOrFail($id);
+            
+            $db=$data->toJson();
+            $mytime = Carbon::now()->format('Y/m/d H:i:s');
+            $str=$dataType->model_name;
+            $ch=str_split($str, 11);
+            // $chaine=$ch[1];
+            $chaine="POD";
+            $historique=HistoriqueEdit::create([
+                'model'=>$chaine,
+                'operation'=>'Edit',
+                'data'=>$db,
+                'user'=>auth()->user()->email,
+                'date'=>$mytime,
+            ]);
+            // Check permission
+            $this->authorize('edit', $data);
+    
+            // Validate fields with ajax
+            $val = $this->validateBread($request->all(), $dataType->editRows, $dataType->name, $id)->validate();
+    
+            // Get fields with images to remove before updating and make a copy of $data
+            $to_remove = $dataType->editRows->where('type', 'image')
+                ->filter(function ($item, $key) use ($request) {
+                    return $request->hasFile($item->field);
+                });
+            $original_data = clone ($data);
+            // dd($data);
+            $this->insertUpdateData($request, $slug, $dataType->editRows, $data);
+    
+            
+            // Delete Images
+            $this->deleteBreadImages($original_data, $to_remove);
+    
+            event(new BreadDataUpdated($dataType, $data));
+    
+            if (auth()->user()->can('browse', app($dataType->model_name))) {
+                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+            } else {
+                $redirect = redirect()->back();
+            }
+    
+           
+            return $redirect->with([
+                'message'    => __('voyager::generic.successfully_updated') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
+                'alert-type' => 'success',
+            ]);
+        }
+        else {
+            return redirect("http://projet.test/admin/programmes/{$id}/edit")->with([
+                'message'    => "vous pouvez pas modifier la contrat N° {$request->contrat_id}",
+                'alert-type' => 'error',
+            ]);
+        }
        
-        $slug = $this->getSlug($request);
-
-        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
-
-        // Compatibility with Model binding.
-        $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
-        $model = app($dataType->model_name);
-        $query = $model->query();
-        if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope' . ucfirst($dataType->scope))) {
-            $query = $query->{$dataType->scope}();
-        }
-        if ($model && in_array(SoftDeletes::class, class_uses_recursive($model))) {
-            $query = $query->withTrashed();
-        }
-
-        $data = $query->findOrFail($id);
-
-        // Check permission
-        $this->authorize('edit', $data);
-
-        // Validate fields with ajax
-        $val = $this->validateBread($request->all(), $dataType->editRows, $dataType->name, $id)->validate();
-
-        // Get fields with images to remove before updating and make a copy of $data
-        $to_remove = $dataType->editRows->where('type', 'image')
-            ->filter(function ($item, $key) use ($request) {
-                return $request->hasFile($item->field);
-            });
-        $original_data = clone ($data);
-
-        $this->insertUpdateData($request, $slug, $dataType->editRows, $data);
-
-        // Delete Images
-        $this->deleteBreadImages($original_data, $to_remove);
-
-        event(new BreadDataUpdated($dataType, $data));
-
-        if (auth()->user()->can('browse', app($dataType->model_name))) {
-            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
-        } else {
-            $redirect = redirect()->back();
-        }
-
        
-        return $redirect->with([
-            'message'    => __('voyager::generic.successfully_updated') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
-            'alert-type' => 'success',
-        ]);
     }
 
     //***************************************
@@ -457,6 +528,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
             $view = "voyager::$slug.edit-add";
         }
 
+   
         return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
     }
 
@@ -469,33 +541,90 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
      */
     public function store(Request $request)
     {
-        $slug = $this->getSlug($request);
 
-        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
-        // Check permission
-        $this->authorize('add', app($dataType->model_name));
 
-        // Validate fields with ajax
-        $val = $this->validateBread($request->all(), $dataType->addRows)->validate();
-        $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
+        // dd($request->contrat_id);
 
-        event(new BreadDataAdded($dataType, $data));
+        $prog=DB::table('programmes')->select('*')->where('contrat_id','=',$request->contrat_id)->count();
+        
+        if ($prog<3) {
 
-        if (!$request->has('_tagging')) {
-            if (auth()->user()->can('browse', $data)) {
-                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
-            } else {
-                $redirect = redirect()->back();
+            $ph=DB::table('programmes')
+            ->select('*')
+            ->where('contrat_id','=',$request->contrat_id)
+            ->where('phase','=',$request->phase)
+            ->first();
+           
+            if($ph==null)
+            {
+                $slug = $this->getSlug($request);
+
+                $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+        
+                // Check permission
+                $this->authorize('add', app($dataType->model_name));
+        
+                // Validate fields with ajax
+                
+                $val = $this->validateBread($request->all(), $dataType->addRows)->validate();
+                $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
+                $mytime = Carbon::now()->format('Y/m/d H:i:s');
+                $str=$dataType->model_name;
+                $ch=str_split($str, 11);
+                // $chaine=$ch[1];
+                $chaine="POD";
+                $historique=HistoriqueAdd::create([
+                    'model'=>$chaine,
+                    'operation'=>'add',
+                    'data'=>$data->id,
+                    'user'=>auth()->user()->email,
+                    'date'=>$mytime,
+                ]);
+                // $data->notify(new InvoicePaid($data));
+               
+                // foreach ($data->notifications as $notification) {
+                //     dd($notification);
+                // }
+                // $data->unreadNotifications->markAsRead();
+                // $data->unreadNotifications()->update(['read_at' => now()]);
+        
+                
+        
+                
+                event(new BreadDataAdded($dataType, $data));
+        
+                if (!$request->has('_tagging')) {
+                    if (auth()->user()->can('browse', $data)) {
+                        $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                    } else {
+                        $redirect = redirect()->back();
+                    }
+        
+                    return $redirect->with([
+                        'message'    => __('voyager::generic.successfully_added_new') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
+                        'alert-type' => 'success',
+                    ]);
+                } else {
+                    return response()->json(['success' => true, 'data' => $data]);
+                }
             }
-
-            return $redirect->with([
-                'message'    => __('voyager::generic.successfully_added_new') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
-                'alert-type' => 'success',
-            ]);
-        } else {
-            return response()->json(['success' => true, 'data' => $data]);
+            else{
+                return redirect()->route("voyager.programmes.create")->with([
+                    'message'    => "vous avez deja cette phase pour la contrat N° {$request->contrat_id}",
+                    'alert-type' => 'error',
+                ]);   
+            }
         }
+        
+            
+        else {
+            return redirect()->route("voyager.programmes.create")->with([
+                'message'    => "vous pouvez pas ajouter un autres programme pour la contrat N° {$request->contrat_id}",
+                'alert-type' => 'error',
+            ]);
+        }
+        
     }
 
     //***************************************
@@ -528,6 +657,18 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
         foreach ($ids as $id) {
             $data = call_user_func([$dataType->model_name, 'findOrFail'], $id);
 
+            $db=$data->toJson();
+            $mytime = Carbon::now()->format('Y/m/d H:i:s');
+            $str=$dataType->model_name;
+           $ch=str_split($str, 11);
+           $chaine="POD";
+            $historique=HistoriqueSup::create([
+                'model'=>$chaine,
+                'operation'=>'Delete',
+                'data'=>$db,
+                'user'=>auth()->user()->email,
+                'date'=>$mytime,
+            ]);
             // Check permission
             $this->authorize('delete', $data);
 
@@ -1039,6 +1180,15 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
             $mytime = Carbon::now();
             $prog->dateValidation=$mytime;
             $prog->save();
+            $mytime = Carbon::now()->format('Y/m/d H:i:s');
+
+            $historique=HistoriqueValidation::create([
+            'model'=>'Programme',
+            'operation'=>'validation',
+            'data'=>$prog->id,
+            'user'=>auth()->user()->email,
+            'date'=>$mytime,
+        ]);
             return redirect(route('voyager.programmes.index'));
         
        
@@ -1050,7 +1200,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
               ->where('valideB','=','non')
               ->update(['valideB' => 'oui']);
 
-            return redirect(route('voyager.realisation-sismiques.index'));
+            return redirect(route('voyager.programmes.index'));
         
        
     }

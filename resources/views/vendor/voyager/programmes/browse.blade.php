@@ -1,15 +1,13 @@
 @extends('voyager::master')
 
 @php
-    // $prog = collect(json_decode($prog, true));
-    // $cpt=0;
-    // for ($i = 0; $i < count($prog); $i++){
-    //       if ($prog[$i]['ValideB']==='non'){
-    //         $cpt=$cpt+1;
-    //       }
-    // }
-              
-    
+// $prog = collect(json_decode($prog, true));
+// $cpt=0;
+// for ($i = 0; $i < count($prog); $i++){
+//       if ($prog[$i]['ValideB']==='non'){
+//         $cpt=$cpt+1;
+//       }
+// }
 @endphp
 @section('page_title', __('voyager::generic.viewing') . ' ' . $dataType->getTranslatedAttribute('display_name_plural'))
 {{-- <style>
@@ -28,95 +26,36 @@
     </style> --}}
 @section('page_header')
     <div class="container-fluid">
-        <h3 class="text-center" style="color: black;padding: 25px;">
-            <i class="{{ $dataType->icon }}"></i> {{ $dataType->getTranslatedAttribute('display_name_plural') }}
-        </h3>
-         
-    
-
-        {{-- @can('add', app($dataType->model_name))
-            <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
-                <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
-            </a>
-        @endcan --}}
-        {{-- <ul class="nav nav-tabs" style="margin-bottom: 25px;">
-            <li class="active"><a href="#home" data-toggle="tab">Objectif Sismique Phase 1</a></li>
-            <li class="active"><a href="#home" data-toggle="tab">Objectif Sismique Phase 2</a></li>
-            <li class="active"><a href="#home" data-toggle="tab">Objectif Sismique Phase 3</a></li>
-            <li><a href="#profile" data-toggle="tab">Profile</a></li>
-            <li class="active"> @can('add', app($dataType->model_name))
-                <a href="{{ route('voyager.'.$dataType->slug.'.create') }}" class="btn btn-success btn-add-new">
-                    <i class="voyager-plus"></i> <span>{{ __('voyager::generic.add_new') }}</span>
+        <h1 style="color: black;font-size: 20px" class="page-title">
+            <i class="{{ $dataType->icon }}"></i> Plan de developement
+        </h1>
+        @if ($prog > 0)
+            @can('add', app($dataType->model_name))
+                <a class="btn btn-success btn-add-new" style="background-color: rgb(247, 78, 16);" href="#">
+                    <i class="voyager-plus"></i> Ajouter nouveau Plan</span>
                 </a>
-            @endcan</li>
-            
-        </ul>
-        
-        <div id="myTabContent" class="tab-content">
-            <div class="tab-pane fade active in" id="home">
-                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
-            </div>
-            <div class="tab-pane fade" id="profile">
-                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-            </div>
-        </div> --}}
-{{-- {{dd($prog)}} --}}
-        
-
-        <ul class="nav nav-pills">
-             
-                @if ($prog>0)
-                <li class="active"> @can('add', app($dataType->model_name))
-                    <a href="#">
-                        <i class="voyager-plus"></i> Ajouter nouveau programme</span>
-                    </a>
-                @endcan
-            </li>
-                @else 
-                <li class="active"> @can('add', app($dataType->model_name))
-                    <a href="{{ route('voyager.' . $dataType->slug . '.create') }}">
-                        <i class="voyager-plus"></i> Ajouter nouveau programme</span>
-                    </a>
-                @endcan
-            </li>
-            @endif            
-           
-{{-- <li class="active">
-    <h1>{{ $cpt }}</h1>
-    @can('add', app($dataType->model_name))
-                    <a href="#">
-                        <i class="voyager-plus"></i> Ajouter nouveau programme</span>
-                    </a>
-                @endcan
-</li> --}}
-            
-            {{-- @endfor --}}
-           
-            <li><a target="_blank" href="{{ route('phase1') }}"><i class="voyager-tools"> </i>Realisation 1 er phase</a>
-            </li>
-            <li><a target="_blank" href="{{ route('phase2') }}"><i class="voyager-tools"> </i>Realisation 2 eme phase</a>
-            </li>
-            <li><a target="_blank" href="{{ route('phase3') }}"><i class="voyager-tools"> </i>Realisation 3 eme phase</a>
-            </li>
-
-            {{-- <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-                    Dropdown <span class="caret"></span>
+            @endcan
+        @else
+            @can('add', app($dataType->model_name))
+                <a class="btn btn-success btn-add-new" href="{{ route('voyager.' . $dataType->slug . '.create') }}"
+                    style="background-color: rgb(255, 106, 52);">
+                    <i class="voyager-plus"></i> Ajouter nouveau plan</span>
                 </a>
-                
-                <ul class="dropdown-menu">
-                    <li><a href="#">Objectif Sismique 1 er phase</a></li>
-                    <li><a href="#">Objectif Sismique 2 eme phase</a></li>
-                    <li><a href="#">Objectif Sismique 3 eme phase</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
-                </li> --}}
+            @endcan
+        @endif
+        @if (session('success'))
+            <div class="alert alert-dismissable alert-warning">
+
+                <h4>{{ session('success') }}</h4>
+
+            </div>
+        @endif
+
+
+
+
         </ul>
 
-        {{-- @can('delete', app($dataType->model_name))
-            @include('voyager::partials.bulk-delete')
-        @endcan --}}
         @can('edit', app($dataType->model_name))
             @if (!empty($dataType->order_column) && !empty($dataType->order_display_column))
                 <a href="{{ route('voyager.' . $dataType->slug . '.order') }}" class="btn btn-primary btn-add-new">
@@ -124,11 +63,7 @@
                 </a>
             @endif
         @endcan
-        {{-- @can('delete', app($dataType->model_name))
-            @if ($usesSoftDeletes)
-                <input type="checkbox" @if ($showSoftDeleted) checked @endif id="show_soft_deletes" data-toggle="toggle" data-on="{{ __('voyager::bread.soft_deletes_off') }}" data-off="{{ __('voyager::bread.soft_deletes_on') }}">
-            @endif
-        @endcan --}}
+
         @foreach ($actions as $action)
             @if (method_exists($action, 'massAction'))
                 @include('voyager::bread.partials.actions', ['action' => $action, 'data' => null])
@@ -139,6 +74,8 @@
 @stop
 
 @section('content')
+
+
     <div class="page-content browse container-fluid">
         @include('voyager::alerts')
         <div class="row">
@@ -192,9 +129,10 @@
                                             </th>
                                         @endif --}}
                                         @foreach ($dataType->browseRows as $row)
-                                            <th class="text-center" style="font-size: 11px;">
+                                            <th class="text-center" style="font-size: 11px; ">
                                                 @if ($isServerSide && in_array($row->field, $sortableColumns))
-                                                    <a href="{{ $row->sortByUrl($orderBy, $sortOrder) }}">
+                                                    <a style="color: rgb(0, 0, 0);"
+                                                        href="{{ $row->sortByUrl($orderBy, $sortOrder) }}">
                                                 @endif
                                                 {{ $row->getTranslatedAttribute('display_name') }}
                                                 @if ($isServerSide)
@@ -228,7 +166,7 @@
                                                         $data->{$row->field} = $data->{$row->field . '_browse'};
                                                     }
                                                 @endphp
-                                                <td>
+                                                <td style="color: rgb(0, 0, 0);">
                                                     @if (isset($row->details->view))
                                                         @include($row->details->view, [
                                                             'row' => $row,
@@ -461,16 +399,16 @@
         $(document).ready(function() {
             @if (!$dataType->server_side)
                 var table = $('#dataTable').DataTable({!! json_encode(
-    array_merge(
-        [
-            'order' => $orderColumn,
-            'language' => __('voyager::datatable'),
-            'columnDefs' => [['targets' => 'dt-not-orderable', 'searchable' => false, 'orderable' => false]],
-        ],
-        config('voyager.dashboard.data_tables', []),
-    ),
-    true,
-) !!});
+                    array_merge(
+                        [
+                            'order' => $orderColumn,
+                            'language' => __('voyager::datatable'),
+                            'columnDefs' => [['targets' => 'dt-not-orderable', 'searchable' => false, 'orderable' => false]],
+                        ],
+                        config('voyager.dashboard.data_tables', []),
+                    ),
+                    true,
+                ) !!});
             @else
                 $('#search-input select').select2({
                     minimumResultsForSearch: Infinity
@@ -512,11 +450,11 @@
                     if ($(this).prop('checked')) {
                         $('#dataTable').before(
                             '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 1]), true) }}"></a>'
-                            );
+                        );
                     } else {
                         $('#dataTable').before(
                             '<a id="redir" href="{{ route('voyager.' . $dataType->slug . '.index', array_merge($params, ['showSoftDeleted' => 0]), true) }}"></a>'
-                            );
+                        );
                     }
 
                     $('#redir')[0].click();

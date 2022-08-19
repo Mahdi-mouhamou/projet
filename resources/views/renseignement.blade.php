@@ -41,7 +41,7 @@
         <table id="customers">
             <thead>
                 <tr>
-                    <th style="  background-color: #04AA6D;text-align: center ;color: white" colspan="4">Informations géographiques</th>
+                    <th style="   background-color: rgb(255, 106, 52);text-align: center ;color: white" colspan="4">Informations géographiques</th>
                 </tr>
             </thead>
             <tbody>
@@ -61,12 +61,8 @@
                     <td>{{$perimetre->Asset}}</td>
                 </tr>
                 <tr>
-                    <th>Departement</th>
-                    <td>{{$perimetre->Departement}}</td>
-                </tr>
-                <tr>
-                    <th>statut Contrat</th>
-                    <td>{{$perimetre->Statut}}</td>
+                    <th>Frontier</th>
+                    <td>{{$perimetre->frontier}}</td>
                 </tr>
                 <tr>
                     <th>Bassin</th>
@@ -109,6 +105,28 @@
        <tr>
         <td>{{$gisement->NomGisement}}</td>
         <td>{{$gisement->Superficie}}</td>
+        </tr>
+       @endforeach
+     
+    </tbody>
+</table>
+
+<table style="margin-top: 50px" id="customers">
+    <thead>
+        <tr>
+            <th>Nom du reservoir </th>
+            <th>Nom du surface prorogation </th>
+            <th>Superficie Km²</th>
+            <th>Superficie prorogation Km²</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($reservoir as $reservoir)
+       <tr>
+        <td>{{$reservoir->NomReservoir}}</td>
+        <td>{{$reservoir->NomSurfaceProrogation}}</td>
+        <td>{{$reservoir->Superficie}}</td>
+        <td>{{$reservoir->SuperficiePro}}</td>
         </tr>
        @endforeach
      

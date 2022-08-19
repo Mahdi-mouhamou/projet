@@ -145,8 +145,16 @@ return [
 
         'widgets' => [
             'TCG\\Voyager\\Widgets\\UserDimmer',
-            'TCG\\Voyager\\Widgets\\PostDimmer',
-            'TCG\\Voyager\\Widgets\\PageDimmer',
+            'TCG\\Voyager\\Widgets\\RoleDimmer',
+            'TCG\\Voyager\\Widgets\\mahdi1',
+            'TCG\\Voyager\\Widgets\\NbperimetreValide',
+            'TCG\\Voyager\\Widgets\\NbprogrammeValide',
+            'TCG\\Voyager\\Widgets\\NbcontratValide',
+            'TCG\\Voyager\\Widgets\\NbFinancePuitValide',
+            'TCG\\Voyager\\Widgets\\NbFinanceGgValide',
+            'TCG\\Voyager\\Widgets\\NbFinanceSismiqueValide',
+            'TCG\\Voyager\\Widgets\\NbFinanceFractValide',
+            // 'TCG\\Voyager\\Widgets\\mahdi',
         ],
 
     ],
