@@ -72,8 +72,12 @@
      <h2 class="text-center">Listes des fiche de Synthese Finance</h2>
       @endif
       @if ($routeName=='statistique')
-     <h2 class="text-center">Statistique des perimetres</h2>
+     <h2 class="text-center">Liste des perimetres</h2>
       @endif
+      @if ($routeName=='FicheEtudeAvancement')
+      <h2 class="text-center">Listes des fiche de Synthese etude avancement</h2>
+      @endif
+
     {{-- <h2 class="text-center">Listes des fiche de Synthese</h2> --}}
     
     <table id="customers">
@@ -108,7 +112,7 @@
         <td><a class="btn btn-sm btn-danger center " style="width: 30%;background-color: rgb(0, 0, 0)" href=" {{route('detailleFicheEtudeAvancement',['id'=>$item ['id']])}} ">consulter la fiche</a></td>
         @endif
         @if ($routeName=='statistique')
-        <td><a class="btn btn-sm btn-danger center " style="width: 30%;background-color: rgb(0, 0, 0)" href=" {{route('graphDetaille',['id'=>$item ['id']])}} ">Statistique</a></td>
+        <td><a class="btn btn-sm btn-danger center " style="width: 30%;background-color: rgb(0, 0, 0)" href=" {{route('graphDetaille',['id'=>$item ['id']])}} ">consulter</a></td>
         @endif
       </tr>
       @endforeach

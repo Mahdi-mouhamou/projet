@@ -7,6 +7,7 @@ use App\Models\FinanceGg;
 use Illuminate\Http\Request;
 use App\Models\HistoriqueAdd;
 use App\Models\HistoriqueSup;
+use App\Models\RealisationGg;
 use App\Models\HistoriqueEdit;
 use Illuminate\Support\Carbon;
 use TCG\Voyager\Facades\Voyager;
@@ -334,6 +335,9 @@ class RealisationGgController extends  \TCG\Voyager\Http\Controllers\VoyagerBase
     // POST BR(E)AD
     public function update(Request $request, $id)
     {
+        $Real = RealisationGg::where('id','=',$id)->first();
+        $Real->Valide = "oui";
+        $Real->save();
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -363,6 +367,21 @@ class RealisationGgController extends  \TCG\Voyager\Http\Controllers\VoyagerBase
             'user'=>auth()->user()->email,
             'date'=>$mytime,
         ]);
+        $FinanceG=FinanceGg::where('Realisation_Gg_id',$id)->first();
+            if (is_null($FinanceG)) {
+            } else {
+               $fin = $FinanceG->toJson();
+    
+            $mytime = Carbon::now()->format('Y/m/d H:i:s');
+            $historique = HistoriqueSup::create([
+                'model' => 'financeGg',
+                'operation' => 'Delete',
+                'data' => $fin,
+                'user' => auth()->user()->email,
+                'date' => $mytime,
+            ]);
+            $FinanceG->delete();  
+            }
         // Check permission
         $this->authorize('edit', $data);
 

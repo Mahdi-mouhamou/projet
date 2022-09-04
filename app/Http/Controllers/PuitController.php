@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
 use App\Models\FinanceFracturation;
+use App\Models\Puit;
 use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -336,6 +337,9 @@ class PuitController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
     // POST BR(E)AD
     public function update(Request $request, $id)
     {
+        $Real = Puit::where('id','=',$id)->first();
+        $Real->valide = "oui";
+        $Real->save();
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -365,6 +369,21 @@ class PuitController extends \TCG\Voyager\Http\Controllers\VoyagerBaseController
             'user'=>auth()->user()->email,
             'date'=>$mytime,
         ]);
+        $finPuit=FinancePuit::where('puit_id',$id)->first();
+        if (is_null($finPuit)) {
+        } else {
+                                $p = $finPuit->toJson();
+                                $mytime = Carbon::now()->format('Y/m/d H:i:s');
+                                $historique = HistoriqueSup::create([
+                                    'model' => 'financepuit',
+                                    'operation' => 'Delete',
+                                    'data' => $p,
+                                    'user' => auth()->user()->email,
+                                    'date' => $mytime,
+                                ]);
+
+        $finPuit->delete();
+                }
         // Check permission
         $this->authorize('edit', $data);
 

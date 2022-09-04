@@ -3,7 +3,7 @@
 @section('content')
 
 <style>
-    
+
  .cards{
     width: 100%;
     padding: 35px20px;
@@ -20,11 +20,11 @@
     background: #fff;
     border-radius: 10px;
     box-shadow: 3px 3px 3px  rgba(0,0,0 , 0.3);
-  background-color: #ebf2fa;
+  background-color: #ffffff81;
     /* background-color: #f4f4f9; */
  }
  .number{
-    font-size: 35px;
+    font-size: 30px;
     font-weight: 500;
     color: #000000;
  }
@@ -50,8 +50,9 @@
    /* background-color: #ebf2fa; */
  }
  .icon-box{
-    font-size: 55px;
+    /* font-size: 55px; */
     color: #000000;
+    
  }
 </style>
 {{-- <style>
@@ -120,53 +121,58 @@
                 <div class="card-name">perimetre</div>
             </div>
             <div class="icon-box">
-                <i class="voyager-list"></i>
+                <img style="width:40% ;float: right;" src="{{ asset('storage/sonatrach.png') }}" alt="">
             </div>
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="number">{{$NbPerimetre}}</div>
-                <div class="card-name">perimetre</div>
+                <div class="number">{{$totalHuile}}m³</div>
+                <div class="card-name">totale de huile en {{ now()->year }}</div>
             </div>
             <div class="icon-box">
-                <i class="voyager-list"></i>
+                <img style="width:55% ;float: right;" src="{{ asset('storage/sonatrach.png') }}" alt="">
             </div>
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="number">{{$NbPerimetre}}</div>
-                <div class="card-name">perimetre</div>
+                <div class="number">{{$totalGaz}}m³</div>
+                <div class="card-name">totale  du gaz en {{ now()->year }}</div>
             </div>
             <div class="icon-box">
-                <i class="voyager-list"></i>
+                <img style="width:50% ;float: right;"src="{{ asset('storage/sonatrach.png') }}" alt="">
             </div>
         </div>
         <div class="card">
             <div class="card-content">
-                <div class="number">{{$NbPerimetre}}</div>
-                <div class="card-name">perimetre</div>
+                <div class="number">{{$totalGazAss}}m³</div>
+                <div class="card-name">totale du gaz associé en {{ now()->year }}</div>
             </div>
             <div class="icon-box">
-                <i class="voyager-list"></i>
+                <img style="width:60% ;float: right;" src="{{ asset('storage/sonatrach.png') }}" alt="">
             </div>
         </div>
     </div>
+   
+            {{-- <h2 style="color: #000000;text-align: center ">
+              globale graphs
+            </h2> --}}
+
     <div class="charts">
         <div class="chart">
-            <h2 style="color: #000000;text-align: center ">
-              Totale des coutes par perimetre
-            </h2>
+            <h4 style="color: #000000;text-align: center ">
+              Totale des coûts par perimetre
+            </h4>
             <div style="">
                 <canvas style="" id="myChart" role="img" aria-label="chart"></canvas> 
             </div>
         </div>
         <div class="chart" id="circle-chart">
-            <h2 style="color: #000000;text-align: center ;">
-                Pourcentage des coute 
+            <h4 style="color: #000000;text-align: center ;">
+                Pourcentage des coûts 
                 <div style="">
                     <canvas style=" " id="myChartD" role="img" aria-label="chart"></canvas> 
                 </div>
-            </h2>
+            </h4>
         </div>
     </div>
 </div>
@@ -187,12 +193,14 @@ var myChart = new Chart(ctx,{
      labels:labels,
      datasets:[{
          data:coute,
-         backgroundColor:[      'rgb(255, 99, 132)',
+         backgroundColor:[
+      'rgb(255, 99, 132)',
       'rgb(54, 162, 235)',
       'rgb(255, 205, 86)',
-      'rgb(255, 25, 86)',],
+      'rgb(255, 25, 86)',
+      'rgb(22, 2, 86)',],
       barPercentage: 0.4,
-         label: 'Total des coutes par perimetre',
+         label: 'Total des coûts par perimetre',
      }],
  }
 });
@@ -210,9 +218,10 @@ var myChartD = new Chart(ctx,{
       'rgb(54, 162, 235)',
       'rgb(255, 205, 86)',
       'rgb(255, 25, 86)',
+      'rgb(22, 2, 86)',
     ],
     hoverOffset:20,
-         label: 'Total des coutes par perimetre',
+         label: 'Total des coûts par perimetre',
      }],
  }
 });

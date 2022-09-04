@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\Fracturation;
 use Illuminate\Http\Request;
 use App\Models\HistoriqueAdd;
 use App\Models\HistoriqueSup;
@@ -10,6 +11,7 @@ use App\Models\HistoriqueEdit;
 use Illuminate\Support\Carbon;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
+use App\Models\FinanceFracturation;
 use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -333,6 +335,9 @@ class FracturationController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCo
     // POST BR(E)AD
     public function update(Request $request, $id)
     {
+        $Real = Fracturation::where('id','=',$id)->first();
+        $Real->valide = "oui";
+        $Real->save();
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -363,6 +368,19 @@ class FracturationController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCo
             'user'=>auth()->user()->email,
             'date'=>$mytime,
         ]);
+        $finFrac=FinanceFracturation::where('fracturation_id',$id)->first();
+        if (is_null($finFrac)) {
+        } else {  $finfract = $finFrac->toJson();
+        $mytime = Carbon::now()->format('Y/m/d H:i:s');
+        $historique = HistoriqueSup::create([
+            'model' => 'financefrac',
+            'operation' => 'Delete',
+            'data' => $finfract,
+            'user' => auth()->user()->email,
+            'date' => $mytime,
+        ]);
+        $finFrac->delete();
+    }
         // Check permission
         $this->authorize('edit', $data);
 
@@ -533,6 +551,20 @@ class FracturationController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCo
                 'user'=>auth()->user()->email,
                 'date'=>$mytime,
             ]);
+
+            $finFrac=FinanceFracturation::where('fracturation_id',$id)->first();
+            if (is_null($finFrac)) {
+            } else {  $finfract = $finFrac->toJson();
+            $mytime = Carbon::now()->format('Y/m/d H:i:s');
+            $historique = HistoriqueSup::create([
+                'model' => 'financefrac',
+                'operation' => 'Delete',
+                'data' => $finfract,
+                'user' => auth()->user()->email,
+                'date' => $mytime,
+            ]);
+            $finFrac->delete();
+        }
             // Check permission
             $this->authorize('delete', $data);
 

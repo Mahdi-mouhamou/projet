@@ -46,6 +46,8 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
 
     public function index(Request $request)
     {
+
+    
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
@@ -407,7 +409,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
         ->count();
         // dd($prog);
         
-        if ($prog<3) {
+        if ($prog<=3) {
 
             
             $slug = $this->getSlug($request);
@@ -611,7 +613,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
             }
             else{
                 return redirect()->route("voyager.programmes.create")->with([
-                    'message'    => "vous avez deja cette phase pour la contrat N° {$request->contrat_id}",
+                    'message'    => "vous avez deja cette phase pour le contrat N° {$request->contrat_id}",
                     'alert-type' => 'error',
                 ]);   
             }
@@ -1183,7 +1185,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
             $mytime = Carbon::now()->format('Y/m/d H:i:s');
 
             $historique=HistoriqueValidation::create([
-            'model'=>'Programme',
+            'model'=>'POD',
             'operation'=>'validation',
             'data'=>$prog->id,
             'user'=>auth()->user()->email,
@@ -1195,6 +1197,7 @@ class ProgrammesController extends \TCG\Voyager\Http\Controllers\VoyagerBaseCont
     }
     protected function termine()
     {
+        
         $db=DB::table('programmes')
               ->select('valideB')
               ->where('valideB','=','non')

@@ -55,7 +55,7 @@
                     <td>{{$puitDec}}</td>
                 </tr> 
                 <tr>
-                    <th>Nombre dereservoir</th>
+                    <th>Nombre de reservoir</th>
                     <td>{{$nbResevoir}}</td>
                 </tr>
                

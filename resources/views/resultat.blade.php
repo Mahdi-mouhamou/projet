@@ -65,18 +65,12 @@
     <table id="customers">
       <tr>
         <th style=" background-color: rgb(255, 106, 52);color: #ffffff">Nom de perimetre</th>
-        <th style=" background-color: rgb(255, 106, 52);color: #ffffff">Asset</th>
-        <th style=" background-color: rgb(255, 106, 52);color: #ffffff">Departement</th>
-        <th style=" background-color: rgb(255, 106, 52);color: #ffffff">statut</th>
         <th style=" background-color: rgb(255, 106, 52);color: #ffffff">Actions</th>
       </tr>
       
       @foreach ($perimetre as $item)
       <tr>
         <td>{{$item->NomPerimetre}}</td>
-        <td> {{$item->Asset}}</td>
-        <td>{{$item->Departement}}</td>
-        <td>{{$item->Statut}}</td>
         <td>
         <a class="btn btn-sm btn-danger  " style="width: 30%;background-color: rgb(0, 0, 0)" href=" {{route('resultatPhase',['id'=>$item->id,'phase'=>'phase1'])}} ">phase1</a>
         <a class="btn btn-sm btn-danger  " style="width: 30%;background-color: rgb(0, 0, 0)" href=" {{route('resultatPhase',['id'=>$item->id,'phase'=>'phase2'])}} ">phase2</a>

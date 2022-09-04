@@ -11,6 +11,7 @@ use Illuminate\Support\Carbon;
 use App\Models\FinanceSismique;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\DB;
+use App\Models\RealisationSismique;
 use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -116,15 +117,20 @@ class RealisationSismiqueController extends \TCG\Voyager\Http\Controllers\Voyage
                         $dataType->name.'.'.$row->details->column,
                         'joined.'.$row->details->key
                     );
+                    // dd($query);
                 }
 
                 $dataTypeContent = call_user_func([
                     $query->orderBy($orderBy, $querySortOrder),
                     $getter,
                 ]);
+                // dd($dataTypeContent);
+                
             } elseif ($model->timestamps) {
                 $dataTypeContent = call_user_func([$query->latest($model::CREATED_AT), $getter]);
+           
             } else {
+                
                 $dataTypeContent = call_user_func([$query->orderBy($model->getKeyName(), 'DESC'), $getter]);
             }
 
@@ -187,7 +193,10 @@ class RealisationSismiqueController extends \TCG\Voyager\Http\Controllers\Voyage
         if (view()->exists("voyager::$slug.browse")) {
             $view = "voyager::$slug.browse";
         }
-
+        // foreach($dataTypeContent as $data){
+        //     dd($data);
+        // }
+        // dd($dataTypeContent);
         return Voyager::view($view, compact(
             'actions',
             'dataType',
@@ -252,7 +261,7 @@ class RealisationSismiqueController extends \TCG\Voyager\Http\Controllers\Voyage
 
         // If a column has a relationship associated with it, we do not want to show that field
         $this->removeRelationshipField($dataType, 'read');
-
+    
         // Check permission
         $this->authorize('read', $dataTypeContent);
 
@@ -334,6 +343,10 @@ class RealisationSismiqueController extends \TCG\Voyager\Http\Controllers\Voyage
     // POST BR(E)AD
     public function update(Request $request, $id)
     {
+        $Real = RealisationSismique::where('id','=',$id)->first();
+        // dd($Real);
+        $Real->valide ="non";
+        $Real->save();   
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -363,6 +376,22 @@ class RealisationSismiqueController extends \TCG\Voyager\Http\Controllers\Voyage
             'user'=>auth()->user()->email,
             'date'=>$mytime,
         ]);
+        $FinanceS=FinanceSismique::where('realisation_sismique_id',$id)->first();
+        if (is_null($FinanceS)) {
+        } else {
+          $fin = $FinanceS->toJson();
+
+        $mytime = Carbon::now()->format('Y/m/d H:i:s');
+        $historique = HistoriqueSup::create([
+            'model' => 'financeSism',
+            'operation' => 'Delete',
+            'data' => $fin,
+            'user' => auth()->user()->email,
+            'date' => $mytime,
+        ]);
+        $FinanceS->delete();   
+    }
+        
         // Check permission
         $this->authorize('edit', $data);
 

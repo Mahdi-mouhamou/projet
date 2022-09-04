@@ -1527,7 +1527,7 @@
 @section('content')
     <div class="container-fluid">
         <h2 style="margin-bottom: 40px;color: rgb(0, 0, 0);text-align:center;font-family:fangsong">
-            statistique du perimetre {{ $id }}
+            Lists des graphs disponible
         </h2>
     </div>
     <div class="page-content edit-add container-fluid">
@@ -1536,25 +1536,25 @@
                 <form class="w3-container" action="{{ route('post.graphDetaille') }}" method="post">
                     @csrf
                     <div class="w3-card-4">
-                        <div class="w3-container w3-green">
+                        <div class="w3-container" style="background-color: rgb(255, 106, 52)">
                             <h2 style="color: rgb(255, 255, 255); font-size: 17px; text-align: center;font-family:fangsong;margin: 20px"
                                 class="control-label" for="name">selectionner un graph</h2>
                         </div>
 
                         <select style="padding: 14px;text-align: center; color: black" class="w3-input" name="statistique">
-                            <option value="coute">coute</option>
-                            <option value="sismique">sismique</option>
+                            <option value="coute">Total des coûts en dollars par perimetre</option>
+                            <option value="sismique">Les coûts sismique (2D/3D) en dollars par perimetre</option>
                             <option value="couteSismiquephase">coût sismique 2D/3D par phase</option>
                             <option value="couteSismiqueAnnee">coût sismique 2D/3D par annee</option>
                             <option value="couteMagnetiquePhase">coût realisation magnétique par phase</option>
                             <option value="couteMagnetiqueAnnee">coût realisation magnétique par annee</option>
                             <option value="perimetreAnne">Nombre de perimetre par annee</option>
-                            <option value="coutePercentage">pourcentage des coutes des realisation physique</option>
+                            <option value="coutePercentage">pourcentage des coûts des realisation physique</option>
                         </select>
                         <input type="hidden" name="id" value="{{ $id }}">
                         <div class="mt-3">
                             {{-- {{dd($id)}} --}}
-                            <button style="margin-left: 415px" type="submit" class="btn btn-success">select graph</button>
+                            <button style="margin-left: 415px;background-color: rgb(255, 106, 52)" type="submit" class="btn btn-success">select graph</button>
                         </div>
                 </form>
             </div>
@@ -1566,7 +1566,7 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    Totale des coutes par perimetre
+                    Totale des coûts par perimetre
                 </h2>
                 <canvas id="myChart" role="img" aria-label="chart"></canvas>
             </div>
@@ -1583,10 +1583,12 @@
                     labels: labels,
                     datasets: [{
                         data: coute,
-                        backgroundColor: ["crimson", "red", "lightblue", "lightgreen"],
-                        label: 'Total des coutes par perimetre',
+                        backgroundColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)','rgb(255, 25, 86)','#0077b6','#7209b7'],
+                        label: 'Total des coûts en dollars par perimetre',
+                        barPercentage: 0.4,
                     }],
-                }
+                },
+                
             });
         </script>
     @endif
@@ -1594,7 +1596,7 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    Les coutes sismique 2D et 3D par perimetre
+                    Les coûts sismique (2D/3D) en dollars par perimetre
                 </h2>
                 <canvas id="myChart2D3D" role="img" aria-label="chart"></canvas>
             </div>
@@ -1614,11 +1616,13 @@
                             data: data2D,
                             backgroundColor: ["red"],
                             label: '2D',
+                            barPercentage: 0.4,
                         },
                         {
                             data: data3D,
                             backgroundColor: ["lightgreen"],
                             label: '3D',
+                            barPercentage: 0.4,
                         },
                     ],
                 }
@@ -1629,9 +1633,9 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    Les coutes sismique 2D et 3D du perimetre par phase
+                    Les coûts sismique 2D et 3D du perimetre par phase
                 </h2>
-                <canvas role="img" aria-label="chart"></canvas>
+                <canvas id="myChart2D3D" role="img" aria-label="chart"></canvas>
             </div>
         </div>
 
@@ -1648,11 +1652,13 @@
                     datasets: [{
                             data: data2D,
                             backgroundColor: ["red"],
+                            barPercentage: 0.4,
                             label: '2D',
                         },
                         {
                             data: data3D,
                             backgroundColor: ["lightgreen"],
+                            barPercentage: 0.4,
                             label: '3D',
                         },
                     ],
@@ -1664,7 +1670,7 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    Les coutes sismique 2D et 3D du perimetre par annee
+                    Les coûts sismique 2D et 3D du perimetre par annee
                 </h2>
                 <canvas id="myChartAnne" role="img" aria-label="chart"></canvas>
             </div>
@@ -1705,7 +1711,7 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    Les coutes magnetique du perimetre par phase
+                    Les coûts magnetique du perimetre par phase
                 </h2>
                 <canvas id="myChartAnne" role="img" aria-label="chart"></canvas>
             </div>
@@ -1725,6 +1731,7 @@
                             borderColor: "red",
                             label: 'coute magnetique',
                             tension: 0.4,
+                            barPercentage: 0.4,
 
                         }, ],
                     }
@@ -1735,7 +1742,7 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    Les coutes magnetique du perimetre par annee
+                    Les coûts magnetique du perimetre par annee
                 </h2>
                 <canvas id="myChartAnne" role="img" aria-label="chart"></canvas>
             </div>
@@ -1755,7 +1762,7 @@
                         data: data,
                         backgroundColor: ["red"],
                         borderColor: "red",
-                        label: 'Coute financier par annee',
+                        label: 'coût financier par annee',
                         tension: 0.4,
 
 
@@ -1800,7 +1807,7 @@
         <div class="charts">
             <div class="chart">
                 <h2 style="color: #000000;text-align: center ">
-                    pourcentage des coutes des realisation physique
+                    pourcentage des coûts des realisation physique
                 </h2>
                 <div style="width:50% ;margin-left: 200px" class="">
                     <canvas id="myChartAnne" role="img" aria-label="chart"></canvas>
@@ -1822,7 +1829,7 @@
                     datasets: [{
                         data: data,
                         backgroundColor: ['rgb(255, 99, 132)','rgb(54, 162, 235)','rgb(255, 205, 86)','rgb(255, 25, 86)','#0077b6','#7209b7'],
-                        label: 'Nombre de perimetre par annee',
+                        label: 'pourcentage des coûts des realisation physique',
                         tension: 0.4,
                         hoverOffset: 20,
 

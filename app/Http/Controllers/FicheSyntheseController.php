@@ -33,11 +33,13 @@ class FicheSyntheseController extends Controller
         // dd("rf");
         $perimetre = DB::table('perimetres')
             ->select('NomPerimetre')
+            ->where('valide','=','oui')
             ->where('id','=',$id)
             ->get();
 // dd($perimetre);
         $contrat = DB::table('contrats')
             ->select('*')
+            ->where('valide','=','oui')
             ->where('perimetre_id', '=', $id)->get();
         // dd($contrat);
        if($contrat->count()==0){
@@ -276,13 +278,23 @@ class FicheSyntheseController extends Controller
              }
          else{
          $effectif2DA = $AcusSismique2D - $realisation2DA;
+         if($effectif2DA<0){$effectif2DA="honoré";}
+
          $effectif2DT = $TraitSismique2D - $realisation2DT;
+         if($effectif2DT<0){$effectif2DT="honoré";}
+
          $effectif2DRT = $RtraitSismique2D - $realisation2DRT;
- 
+         if($effectif2DRT<0){$effectif2DRT="honoré";}
+
          $effectif3DA = $AcusSismique3D - $realisation3DA;
+         if($effectif3DA<0){$effectif3DA="honoré";}
+
          $effectif3DT = $TraitSismique3D - $realisation3DT;
+         if($effectif3DT<0){$effectif3DT="honoré";}
+
          $effectif3DRT = $RtraitSismique3D - $realisation3DRT;
- 
+         if($effectif3DRT<0){$effectif3DRT="honoré";}
+
          $effectifpot = $methodePotentiel - $realisationPot;
          $effectifGg = $EtudeGG - $realisationGg;
          $effectifPuitE = $nbPuitE - $puitE;
@@ -446,12 +458,22 @@ class FicheSyntheseController extends Controller
              }
          else{
          $effectif2DAP2 = $AcusSismique2DP2 - $realisation2DAP2;
+        if($effectif2DAP2<0){$effectif2DAP2="honoré";}
+
          $effectif2DTP2 = $TraitSismique2DP2 - $realisation2DTP2;
+         if($effectif2DTP2<0){$effectif2DTP2="honoré";}
+
          $effectif2DRTP2 = $RtraitSismique2DP2 - $realisation2DRTP2;
+        if($effectif2DRTP2<0){$effectif2DRTP2="honoré";}
  
          $effectif3DAP2 = $AcusSismique3DP2 - $realisation3DAP2;
+         if($effectif3DAP2<0){$effectif3DAP2="honoré";}
+
          $effectif3DTP2 = $TraitSismique3DP2 - $realisation3DTP2;
+         if($effectif3DTP2<0){$effectif3DTP2="honoré";}
+
          $effectif3DRTP2 = $RtraitSismique3DP2 - $realisation3DRTP2;
+         if($effectif3DRTP2<0){$effectif3DRTP2="honoré";}
  
          $effectifpotP2 = $methodePotentielP2 - $realisationPotP2;
          $effectifGgP2 = $EtudeGGP2 - $realisationGgP2;
@@ -767,13 +789,23 @@ class FicheSyntheseController extends Controller
             $effectifPuitD = "";
             }
         else{
-        $effectif2DA = $AcusSismique2D - $realisation2DA;
-        $effectif2DT = $TraitSismique2D - $realisation2DT;
-        $effectif2DRT = $RtraitSismique2D - $realisation2DRT;
-
-        $effectif3DA = $AcusSismique3D - $realisation3DA;
-        $effectif3DT = $TraitSismique3D - $realisation3DT;
-        $effectif3DRT = $RtraitSismique3D - $realisation3DRT;
+            $effectif2DA = $AcusSismique2D - $realisation2DA;
+            if($effectif2DA<0){$effectif2DA="honoré";}
+   
+            $effectif2DT = $TraitSismique2D - $realisation2DT;
+            if($effectif2DT<0){$effectif2DT="honoré";}
+   
+            $effectif2DRT = $RtraitSismique2D - $realisation2DRT;
+            if($effectif2DRT<0){$effectif2DRT="honoré";}
+   
+            $effectif3DA = $AcusSismique3D - $realisation3DA;
+            if($effectif3DA<0){$effectif3DA="honoré";}
+   
+            $effectif3DT = $TraitSismique3D - $realisation3DT;
+            if($effectif3DT<0){$effectif3DT="honoré";}
+   
+            $effectif3DRT = $RtraitSismique3D - $realisation3DRT;
+            if($effectif3DRT<0){$effectif3DRT="honoré";}
 
         $effectifpot = $methodePotentiel - $realisationPot;
         $effectifGg = $EtudeGG - $realisationGg;
@@ -1356,7 +1388,7 @@ class FicheSyntheseController extends Controller
             ->where('puits.Resultat','=','positive')
             ->select('*')
             ->count();            
-            
+            // dd($puitPos);
             $puitNeg = DB::table('puits')
             ->join('reservoirs', 'Reservoir_id', '=', 'reservoirs.id')
             ->join('gisements', 'gisements.id', '=', 'reservoirs.Gisement_id')

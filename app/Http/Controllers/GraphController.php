@@ -915,8 +915,10 @@ class GraphController extends Controller
             // dd($perimetre[0]->NomPerimetre);
             $year = DB::table('perimetres')
                 ->join('contrats', 'contrats.perimetre_id', '=', 'perimetres.id')
-                ->select(DB::raw("YEAR(DateEntrerVigure) as year"))->where('perimetres.valide', '=', 'oui')->distinct()->get();
-
+                ->select(DB::raw("YEAR(DateEntrerVigure) as year"))->where('perimetres.valide', '=', 'oui')
+                ->orderBy('year', 'ASC')
+                ->distinct()->get();
+            // dd($year);
             if ($year->count() != 0) {
                 foreach ($year as $year) {
                     // dd($year->year);
@@ -930,6 +932,7 @@ class GraphController extends Controller
                     $data['nbPerimetre'][] = $nbPerimetre;
                 }
                 $data['chart_data'] = json_encode($data);
+                // dd($year);
                 return view('graph.statistique', [
                     'data' => $data,
                     "value" => $value,

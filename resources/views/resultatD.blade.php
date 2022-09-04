@@ -74,10 +74,10 @@
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife GG</td>
+        {{-- <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife GG</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife potentiel</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puit Exploration</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puits Delination</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puits Delination</td> --}}
     </tr>
     <tr>
         <td>{{ $effectif2DA }}</td>
@@ -86,10 +86,10 @@
         <td>{{ $effectif3DA }}</td>
         <td>{{ $effectif3DT }}</td>
         <td>{{ $effectif3DRT }}</td>
-        <td>{{ $effectifGg }}</td>
+        {{-- <td>{{ $effectifGg }}</td>
         <td>{{ $effectifpot }}</td>
         <td>{{ $effectifPuitE }}</td>
-        <td>{{ $effectifPuitE }}</td>
+        <td>{{ $effectifPuitE }}</td> --}}
     </tr>
 </table>
  @elseif($phase ==='phase2')
@@ -132,13 +132,13 @@
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 2D</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 2D</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 2D</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife GG</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Acquisition 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Traitement 3D</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Retraitement 3D</td>
+        {{-- <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife GG</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife potentiel</td>
         <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puit Exploration</td>
-        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puits Delination</td>
+        <td style="color: white; background-color: rgb(255, 106, 52); text-align: center">Effictife puits Delination</td> --}}
     </tr>
     <tr>
         <td>{{ $effectif2DA }}</td>
@@ -147,10 +147,10 @@
         <td>{{ $effectif3DA }}</td>
         <td>{{ $effectif3DT }}</td>
         <td>{{ $effectif3DRT }}</td>
-        <td>{{ $effectifGg }}</td>
+        {{-- <td>{{ $effectifGg }}</td>
         <td>{{ $effectifpot }}</td>
         <td>{{ $effectifPuitE }}</td>
-        <td>{{ $effectifPuitE }}</td>
+        <td>{{ $effectifPuitE }}</td> --}}
     </tr>
 </table>
 @elseif($phase==='phase3')

@@ -5,6 +5,7 @@
       border-collapse: collapse;
       width: 100%;
       margin: auto;
+      
     }
     h2{
         color: black
@@ -45,7 +46,7 @@
          <h1 style="margin-bottom: 40px;color: rgb(0, 0, 0);text-align:center;font-family:fangsong">Le perimetre {{$perimetre['NomPerimetre']}}</h1>
     @endforeach
        
-    <table  id="customers" style="width:100%">
+    <table  id="customers" style="width:100%;margin-left: 13px">
         <tr>
             @foreach ($contrat as $items)
             
@@ -73,7 +74,7 @@
             <td>{{ $items['DateEcheance'] }}</td>
         </tr>
     </table>
-  <table  id="customers" style="width:100%">
+  <table  id="customers" style="width:100%;margin-left: 13px">
     <tr>
         @foreach ($contrat as $items)
         <th class="text-center" colspan="12">Les engagemment du contrat N° {{ $items['id'] }}</th>
@@ -111,7 +112,7 @@
   </table>
   <br>
   <br>
-  <table  id="customers" style="width:100%">
+  <table  id="customers" style="width:100%;margin-left: 13px">
     <tr>
         
             <th class="text-center" colspan="8">Avenants  Demandes d’accord ALNAFT </th>
@@ -204,7 +205,7 @@
         @endforeach
     </tbody>
 </table>
-<table  id="customers" style="width:60%">
+<table  id="customers" style="width:60%;">
     <tr>
             <th class="text-center" colspan="12">engagemment Effictife phase2 </th>
     </tr>
@@ -233,7 +234,7 @@
          <th style="color: white; width: 50% ;background-color: #f2f2f2;color: black ;">Retraitement 2D</th>
         <td style="text-align: center ">{{ $effectif3DRT }}</td>
      </tr>  
-     <tr>  
+     {{-- <tr>  
         <th style="color: white; width: 50% ;background-color: #f2f2f2;color: black ;">Effictife GG</th>
         <td style="text-align: center ">{{ $effectifGg }}</td>
      </tr>   
@@ -248,7 +249,7 @@
      <tr>
         <th style="color: white; width: 50% ;background-color: #f2f2f2;color: black ;">Effictife puits Delination</th>
         <td style="text-align: center ">{{ $effectifPuitE }}</td>
-    </tr>
+    </tr> --}}
 
 </table>
 
@@ -343,7 +344,7 @@
              <th style="color: white; width: 50% ;background-color: #f2f2f2;color: black ;">Retraitement 2D</th>
             <td style="text-align: center">{{ $effectif3DRTP2 }}</td>
          </tr>  
-         <tr>  
+         {{-- <tr>  
             <th style="color: white; width: 50% ;background-color: #f2f2f2;color: black ;">Effictife GG</th>
             <td style="text-align: center">{{ $effectifGgP2 }}</td>
          </tr>   
@@ -358,7 +359,7 @@
          <tr>
             <th style="color: white; width: 50% ;background-color: #f2f2f2;color: black ;">Effictife puits Delination</th>
             <td style="text-align: center">{{ $effectifPuitEP2 }}</td>
-        </tr>
+        </tr> --}}
 
     </table>
 

@@ -30,7 +30,7 @@ class FicheSyntheseController extends Controller
     protected function detaille($id)
     {
 
-        
+        // dd("dff");
         $perimetre = DB::table('perimetres')
             ->select('NomPerimetre')
             ->where('id','=',$id)
@@ -38,7 +38,9 @@ class FicheSyntheseController extends Controller
 // dd($perimetre);
         $contrat = DB::table('contrats')
             ->select('*')
-            ->where('perimetre_id', '=', $id)->get();
+            ->where('perimetre_id', '=', $id)
+            
+            ->get();
        if($contrat->isEmpty()){
         $avenant="";
         $programme="";

@@ -58,8 +58,8 @@
                 <th>Année de réalisation</th>
                 <th>Compagnie de service</th>
                 <th>Kilometrage Km²</th>
-                <th>Coute en dinar</th>
-                <th>Coute en euro</th>
+                <th>coût en dinar</th>
+                <th>coût en euro</th>
             </tr>
         </thead>
 
@@ -130,8 +130,8 @@
                 <th>Année de réalisation</th>
                 <th>Compagnie de service</th>
                 <th>Kilometrage Km²</th>
-                <th>Coute en dinar</th>
-                <th>Coute en euro</th>
+                <th>coût en dinar</th>
+                <th>coût en euro</th>
             </tr>
         </thead>
 
@@ -208,8 +208,8 @@
                 <th>Année de réalisation</th>
                 <th>Compagnie de service</th>
                 <th>Kilometrage Km²</th>
-                <th>Coute en dinar</th>
-                <th>Coute en euro</th>
+                <th>coût en dinar</th>
+                <th>coût en euro</th>
             </tr>
         </thead>
 
@@ -265,8 +265,8 @@
                 <th>Année de réalisation</th>
                 <th>Compagnie de service</th>
                 <th>Effort propre</th>
-                <th>Coute en dinar</th>
-                <th>Coute en euro</th>
+                <th>coût en dinar</th>
+                <th>coût en euro</th>
             </tr>
         </thead>
 
@@ -304,8 +304,8 @@
                     <th>Débit Final</th>
                     <th>Année de réalisation</th>
                     <th>Effort propre</th>
-                    <th>Coute en dinar</th>
-                    <th>Coute en euro</th>
+                    <th>coût en dinar</th>
+                    <th>coût en euro</th>
                 </tr>
             </thead>
     
@@ -343,8 +343,8 @@
                         <th>Objectifs pétroliers</th>
                         <th>Etat actuel du puits</th>
                         <th>Resultat</th>
-                        <th>Coute en dinar</th>
-                        <th>Coute en euro</th>
+                        <th>coût en dinar</th>
+                        <th>coût en euro</th>
                     </tr>
                 </thead>
         
